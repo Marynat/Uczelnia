@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:include src="#{componentC.getHead()}" />
+
+<body>
+	<div class="banner">
+		<img src="images/psk_logo.png" height="150px" width="50%"></img>
+		<ui:include src="#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a href="rekrutacja.xhtml"><p class="a">Rekrutacja</p></a></li>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}">
+				<a class="active"><ui:include
+						src="#{componentC.getStudentMenu()}"></ui:include> </a>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}">
+				<ui:include src="#{componentC.getAdminMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}">
+				<ui:include src="#{componentC.getDziekanMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}">
+				<ui:include src="#{componentC.getPracownikMenu()}"></ui:include>
+			</ui:fragment>
+
+
+			<li style="float: right"><a href="logowanie.xhtml"><p
+						class="a">Logowanie</p></a></li>
+		</ul>
+	</div>
+	<div class="strona">
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Najpierw się zaloguj</p>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
+			<p class="title">Oto twoje wnioski</p>
+
+			<h:dataTable value="#{studentC.pokazWnioski()}" var="wnioski">
+				<h:column>
+					<f:facet name="header">Tytuł:</f:facet>
+			#{wnioski.tytul}
+		</h:column>
+				<h:column>
+					<f:facet name="header">Treść:</f:facet>
+			#{wnioski.wiadomosc}
+		</h:column>
+				<h:column>
+					<f:facet name="header">Status:</f:facet>
+			<ui:fragment
+						rendered="#{wnioskiC.sprawdzStatus(wnioski.status)}">
+						<p style="color: #7FFF00;">#{wnioski.status}</p>
+					</ui:fragment>
+					<ui:fragment
+						rendered="#{!wnioskiC.sprawdzStatus(wnioski.status)}">
+						<p style="color: #FA8072;">#{wnioski.status}</p>
+					</ui:fragment>
+					
+		</h:column>
+		
+		<h:column>
+					<f:facet name="header">Zgoda:</f:facet>
+			<ui:fragment
+						rendered="#{wnioskiC.sprawdzZgoda(wnioski.zgoda)}">
+						<p style="color: #7FFF00;">#{wnioski.zgoda}</p>
+					</ui:fragment>
+					<ui:fragment
+						rendered="#{!wnioskiC.sprawdzZgoda(wnioski.zgoda)}">
+						<p style="color: #FA8072;">#{wnioski.zgoda}</p>
+					</ui:fragment>
+					
+		</h:column>
+			</h:dataTable>
+			<br/>
+			<a href="nowyWniosek.xhtml"><button>Złóż nowy wniosek</button></a>
+
+		</ui:fragment>
+
+	</div>
+</body>
+</html>

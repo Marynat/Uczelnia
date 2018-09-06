@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:include src="#{componentC.getHead()}" />
+<body>
+	<div class="banner">
+		<img src="images/psk_logo.png" height="150px" width="50%"></img>
+		<ui:include src="#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a href="rekrutacja.xhtml"><p class="a">Rekrutacja</p></a></li>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}">
+				<a class="active"><ui:include
+						src="#{componentC.getStudentMenu()}"></ui:include> </a>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}">
+				<ui:include src="#{componentC.getAdminMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}">
+				<ui:include src="#{componentC.getDziekanMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}">
+				<ui:include src="#{componentC.getPracownikMenu()}"></ui:include>
+			</ui:fragment>
+
+
+			<li style="float: right"><a href="logowanie.xhtml"><p
+						class="a">Logowanie</p></a></li>
+		</ul>
+	</div>
+	<div class="strona">
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Najpierw się zaloguj</p>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
+		<a href="mojeOceny.xhtml"><button>Moje oceny</button></a> <a
+			href="mojeSrednie.xhtml"><button>Moje średnie semestrowe</button></a> <a
+			href="mojeSemestry.xhtml"><button>Moje zaliczenia semestrów</button></a>
+		<a href="mojePlatnosci.xhtml"><button>Płatności niezrealizowane</button></a> <a
+			href="mojeWnioski.xhtml"><button>Moje wnioski</button></a>
+		</ui:fragment>
+		
+	</div>
+</body>
+</html>

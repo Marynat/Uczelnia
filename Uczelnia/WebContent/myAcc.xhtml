@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:include src="#{componentC.getHead()}" />
+
+<body>
+	<div class="banner">
+		<img src="images/psk_logo.png" height="150px" width="50%"></img>
+		<ui:include src="#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a href="rekrutacja.xhtml"><p class="a">Rekrutacja</p></a></li>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}">
+				<ui:include src="#{componentC.getStudentMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}">
+				<ui:include src="#{componentC.getAdminMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}">
+				<ui:include src="#{componentC.getDziekanMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}">
+				<ui:include src="#{componentC.getPracownikMenu()}"></ui:include>
+			</ui:fragment>
+
+			<li style="float: right"><a href="logowanie.xhtml"><p
+						class="a">Logowanie</p></a></li>
+		</ul>
+	</div>
+	
+			
+	<div class="stronaacc">
+	
+	<ui:fragment rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+				<p class="title">Najpierw się zaloguj</p>
+			</ui:fragment>
+	
+	<ui:fragment rendered = "#{!autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+		<p class="title">Witaj na stronie twojego konta</p>
+		
+
+		<div class = "grid-container2">
+		<div class = "item1">
+		<br/>
+		Imie: <br/><br/><br/><br/>
+		Nazwisko: <br/><br/><br/><br/>
+		Login: <br/><br/><br/><br/>
+		Status: <br/><br/><br/>
+		Email: <br/><br/><br/><br/>
+		Pesel: <br/><br/><br/>
+		Adres: <br/><br/><br/><br/>
+		<ui:fragment rendered = "#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
+			Nr albumu: <br/><br/><br/>
+			</ui:fragment>
+		</div>
+		<div class = "item2">
+		<h:form>
+			
+		<h:inputText id="imie" styleClass="input-text" name="imie" 
+			value="#{profilC.imie}" required="true" 
+			requiredMessage="Musisz podać imie" validatorMessage="Imie powinno zawierać tylko litery, wymaganane 2-30 znaków.">
+			<f:validateRegex pattern="[A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,30}" />
+			</h:inputText><br/>
+			
+			<h:message for="imie" errorStyle="color:red;"/><br/>
+			
+			<h:inputText id="nazwisko" styleClass="input-text" name="nazwisko" 
+			value="#{profilC.nazwisko}" required="true" 
+			requiredMessage="Musisz podać nazwisko" validatorMessage="Nazwisko powinno zawierać tylko litery, wymaganane 2-40 znaków.">
+			<f:validateRegex pattern="[A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,40}" />
+			</h:inputText><br/>
+			
+			<h:message for="nazwisko" errorStyle="color:red;"/><br/>
+			
+			<h:inputText id="login" styleClass="input-text" name="login" 
+			value="#{uzytkownik.login}" required="true" 
+			requiredMessage="Musisz podać login" validatorMessage="Login powinien zawierać tylko litery i liczby, wymaganane 4-15 znaków.">
+			<f:validateRegex pattern="[A-Za-z0-9]{2,40}" />
+			</h:inputText><br/>
+			
+			<h:message for="login" errorStyle="color:red;"/><br/>
+			
+			<h:outputText id="status" styleClass="output-text" name="status" 
+			value="#{uzytkownik.rola}">
+			</h:outputText><br/>
+			
+			<h:inputText id="email" styleClass="input-text" name="email" 
+			value="#{profilC.email}" required="true" 
+			requiredMessage="Musisz podać email" validatorMessage="Niepoprawny Email">
+			<f:validateRegex pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,60}" />
+			</h:inputText><br/>
+			
+			<h:message for="email" errorStyle="color:red;"/><br/>
+			
+			<h:outputText id="pesel" styleClass="output-text" name="pesel" 
+			value="#{profilC.pesel}" >
+			</h:outputText><br/>
+			
+			<h:inputText id="adres" styleClass="input-text" name="adres" 
+			value="#{profilC.adres}" required="true" 
+			requiredMessage="Musisz podać adres" validatorMessage="To pole jest wymagane">
+			<f:validateRegex pattern="[A-Za-z0-9ĄąĆćĘęŁłŃńÓóŚśŹźŻż. ]{2,60}" />
+			</h:inputText><br/>
+
+			
+			<h:message for="adres" errorStyle="color:red;"/><br/>
+			
+			<ui:fragment rendered = "#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
+				<h:outputText id="nr_albumu" styleClass="output-text" name="nr_albumu" 
+			value="#{profilC.nr_albumu}" >
+			</h:outputText><br/>
+			</ui:fragment>
+			
+			
+			<h:commandButton style="width: 200px; height: 40px; float:center;"  value="Zaktualizuj swoje dane" action="#{profilC.zaktualizuj()}"/>
+			<h:outputText id="aktual" styleClass="output-text" style= "color: red;" name="aktual" 
+			value="#{profilC.errorMessage}" ></h:outputText><br/>
+			</h:form>	 
+			</div>
+		</div>
+		</ui:fragment>
+	</div>
+</body>
+</html>

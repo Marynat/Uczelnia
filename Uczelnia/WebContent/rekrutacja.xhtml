@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:include src="#{componentC.getHead()}" />
+<body>
+	<div class="banner">
+		<img src="images/psk_logo.png" height="150px" width="50%"></img>
+		<ui:include src="#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a class="active"> <a href="rekrutacja.xhtml"><p
+							class="a">Rekrutacja</p></a></a></li>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}">
+				<ui:include src="#{componentC.getStudentMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}">
+				<ui:include src="#{componentC.getAdminMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}">
+				<ui:include src="#{componentC.getDziekanMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}">
+				<ui:include src="#{componentC.getPracownikMenu()}"></ui:include>
+			</ui:fragment>
+
+
+			<li style="float: right"><a href="logowanie.xhtml"><p
+						class="a">Logowanie</p></a></li>
+		</ul>
+	</div>
+	<div class="strona">
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzRekrutacje().equals(true)}">
+			<p class="title">Rekrutacja jest już otwarta</p>
+			<div class="container">
+				<h:form>
+					Imie: 
+						<br />
+					<h:inputText id="imie" styleClass="input-text" name="imie"
+						value="#{candidateC.imie}" required="true"
+						requiredMessage="Musisz podać imie"
+						validatorMessage="imie powinien zawierać tylko liczby i litery, wymaganane 4-15 znaków.">
+						<f:validateRegex pattern="[0-9A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,25}" />
+					</h:inputText>
+					<br />
+					<h:message for="imie" errorStyle="color:red; display:block" />
+					<br /> 
+			
+					Nazwisko: 
+					<br />
+					<h:inputText id="nazwisko" styleClass="input-text" name="nazwisko"
+						value="#{candidateC.nazwisko}" required="true"
+						requiredMessage="Musisz podać nazwisko"
+						validatorMessage="nazwisko powinien zawierać tylko liczby i litery, wymaganane 4-15 znaków.">
+						<f:validateRegex pattern="[0-9A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,60}" />
+					</h:inputText>
+					<br />
+					<h:message for="nazwisko" errorStyle="color:red; display:block" />
+					<br />
+						
+					Pesel: 
+					<br />
+					<h:inputText id="pesel" styleClass="input-text" name="pesel"
+						value="#{candidateC.pesel}" required="true"
+						requiredMessage="Musisz podać pesel"
+						validatorMessage="pesel powinien zawierać tylko liczby i litery, wymaganane 4-15 znaków.">
+						<f:validateRegex pattern="[0-9]{11,11}" />
+					</h:inputText>
+					<br />
+					<h:message for="pesel" errorStyle="color:red; display:block" />
+					<br />
+					Średnia: 
+					<br />
+					<h:inputText id="srednia" styleClass="input-text" name="srednia"
+						value="#{candidateC.srednia}" required="true"
+						requiredMessage="Musisz podać srednia"
+						validatorMessage="Średnia powinien zawierać tylko liczby i litery, wymaganane 4-15 znaków.">
+					</h:inputText>
+					<br />
+					<h:message for="srednia" errorStyle="color:red; display:block" />
+					<br />
+					Szkoła: 
+					<br />
+
+					<h:selectOneMenu styleClass= "selectBox" value="#{candidateC.szkola}">
+						<f:selectItem
+							itemValue="II Liceum Ogólnokształcące im. Jana Śniadeckiego w Kielcach"
+							itemLabel="Śniadecki" />
+						<f:selectItem
+							itemValue="III Liceum Ogólnokształcące im. Cypriana Kamila Norwida w Kielcach"
+							itemLabel="Norwid" />
+						<f:selectItem
+							itemValue="V Liceumm Ogólnokształcące im. ks. Piotra Ściegiennego w Kielcach"
+							itemLabel="Ściegienny" />
+					</h:selectOneMenu>
+					<br />
+					<br />
+
+					<h:commandButton style="width:200px; height:50px"
+						value="Złóż podanie rekrutacyjne"
+						action="#{candidateC.addCandidate()}" />
+				</h:form>
+			</div>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzRekrutacje().equals(false)}">
+			<p class="title">Rekrutacja jest akualnie zamknięta</p>
+		</ui:fragment>
+
+	</div>
+</body>
+</html>

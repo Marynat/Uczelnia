@@ -1,0 +1,218 @@
+body {
+	background-color: #F0F8FF;
+	width: 100%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.banner {
+	height: 150px;
+	width: 100%;
+	background: url("images/psk_logo.png");
+	background-repeat: no-repeat;
+	background-size: 50% 100%;
+}
+
+.przyciski {
+	height: 50px;
+	width: 100%;
+	background-color: #333;
+}
+
+.strona {
+	background-color: white;
+	width: 100%;
+	min-height: auto;
+	text-align: center;
+	overflow: hidden;
+	height: 100%;
+}
+
+.stronaacc {
+	background-color: #90EE90;
+	width: 100%;
+	min-height: auto;
+	text-align: center;
+	overflow: hidden;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 1.5px 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	background-color: #111;
+}
+
+.active {
+	background-color: #DC143C;
+}
+
+p.a {
+	font: 15px arial, sans-serif;
+}
+
+.title {
+	font: 30px arial, sans-serif;
+}
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: center;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: grey;
+	color: white;
+}
+
+formularz {
+	border: 1px solid #87CEEB;
+}
+
+input[type=text], input[type=password] {
+	width: 100%;
+	padding: 11px 20px;
+	margin: 8px 0;
+	text-align: center;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+
+.output-text {
+	width: 100%;
+	padding: 11px 20px;
+	font: 11px arial;
+	margin: 8px 0;
+	text-align: center;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+
+.area-text {
+	height: 400px;
+	width: 100%;
+	padding: 11px 20px;
+	margin: 8px 0;
+	text-align: center;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	
+}
+
+button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+}
+
+button:hover {
+	color: white;
+	background-color: #003333;
+}
+
+.imgcontainer {
+	text-align: center;
+	margin: 10px 0 12px 0;
+}
+
+img.avatar {
+	width: 10%;
+	border-radius: 10%;
+}
+
+.container {
+	padding: 16px;
+}
+
+span.psw {
+	float: right;
+	padding-top: 16px;
+}
+
+@media screen and (max-width: 300px) {
+	span.psw {
+		display: block;
+		float: none;
+	}
+}
+
+.grid-container {
+	float: right;
+	display: grid;
+	grid-template-columns: auto auto;
+	background-color: lightblue;
+	padding: 1px;
+}
+
+.grid-container>div {
+	background-color: lightblue;
+	text-align: left;
+	padding: 2px 0;
+	font-size: 15px;
+}
+
+.grid-container2 {
+	float: center;
+	display: grid;
+	grid-template-columns: 100px 600px;
+	background-color: #98FB98;
+	padding: 1px;
+}
+
+.item1 {
+	grid-row: 1/span 1;
+}
+
+.item2 {grid-row 2/ span 1;
+	
+}
+
+.item3 {grid-row 3/ span 1;
+	
+}
+
+.selectBox {
+	position: relative;
+	font-family: Arial;
+	color: black;
+	text-align:center;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	border: 1px solid #ccc;
+	font-size: 16px;
+	height: 34px;
+	width: 268px;
+}

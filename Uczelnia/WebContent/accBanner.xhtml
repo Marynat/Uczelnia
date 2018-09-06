@@ -1,0 +1,24 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	
+	<div class ="grid-container">
+	<div class = "item 1">
+		<a href = "#{componentC.getMyAcc() }"><img src="images/avatar.png" alt="Nie udalo sie zaladowac obrazka avatar" width="130px" height="130px" border="2px"/></a></div>
+		<div class = "item2">
+		<b>Imię: </b> <h:outputLabel value="#{profilC.ustawProfil()}"></h:outputLabel> <br/>
+		<b>Nazwisko: </b> <h:outputLabel value="#{profilC.nazwisko}"></h:outputLabel> <br/>
+		<b>Login: </b> <h:outputLabel value="#{uzytkownik.login}"></h:outputLabel><br/>
+		<b>Rola: </b> <h:outputLabel value="#{uzytkownik.rola}"></h:outputLabel><br/><br/>
+		<h:form>
+		<h:commandButton style="width:170px; height: 50px" value="Wyloguj" action="#{autorizationC.wyloguj()}"/>
+		</h:form>
+		</div>
+
+	</div>
+
+</ui:fragment>
+
+
