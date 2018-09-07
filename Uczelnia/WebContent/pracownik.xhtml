@@ -32,9 +32,17 @@
 		</ul>
 		</div>
 	<div class= "strona">
-	<a href = "pracownikOceny.xhtml"><button>Oceny</button></a>
-	<a href = "wnioski.html"><button>Moje wnioski</button></a>
-	<a href = "wiadomosc.html"><button>Wyślij wiadomość</button></a>
+	
+			<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Najpierw się zaloguj</p>
+		</ui:fragment>
+				<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('PRACOWNIK')}">
+	<a href = "wybierzStudenta.xhtml"><button>Oceny</button></a>
+	<a href = "mojeWnioski.xhtml"><button>Moje wnioski</button></a>
+	<a href = "wybierzStudenta2.xhtml"><button>Wyślij wiadomość</button></a>
+	</ui:fragment>
 	</div>
 </body>
 </html>

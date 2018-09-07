@@ -36,9 +36,9 @@
 		</ui:fragment>
 
 		<ui:fragment
-			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('ADMINISTRATOR')}">
-	<a href = "dodajWplaty.xhtml"><button type="sumbit">Wpłaty</button></a>
-	<a href = "zmienRekrutacje.xhtml"><button type="sumbit">Rekrutacja</button></a>
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('ADMINISTRATOR')}"><h:form>
+			<h:commandButton style = "height: 50px; witdh: 100px;" value = "Zmien stan rekrutacji" action="#{autorizationC.zmienRekrutacje()}"></h:commandButton><br/>
+			</h:form>
 	</ui:fragment>
 	</div>
 </body>

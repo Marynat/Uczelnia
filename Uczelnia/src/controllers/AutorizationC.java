@@ -229,5 +229,12 @@ public class AutorizationC {
 			session.invalidate();
 		}
 	}
+	
+	public String zmienRekrutacje() {
+		Uczelnia uczelnia = uczelniaDAO.findOne((long) 1);
+			uczelnia.setRekrutacja(!uczelnia.isRekrutacja());
+			uczelniaDAO.save(uczelnia);
+			return "Rekrutacja została zmieniona";
+	}
 
 }

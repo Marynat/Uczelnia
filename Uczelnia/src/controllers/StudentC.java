@@ -117,9 +117,9 @@ public class StudentC {
 		}
 		return oc;
 	}
-	
+
 	@Data
-	public class Srednie{
+	public class Srednie {
 		public float srednia;
 		public float dodana;
 		public float dzielnik;
@@ -157,11 +157,11 @@ public class StudentC {
 				}
 			}
 		}
-		
+
 		Iterator<OcenaPrzedmiotu> it3 = oc.iterator();
-		while(it3.hasNext()) {			
+		while (it3.hasNext()) {
 			OcenaPrzedmiotu oce = it3.next();
-			if(sr.isEmpty()) {
+			if (sr.isEmpty()) {
 				Srednie sre = new Srednie();
 				sre.setIdSem(oce.idSem);
 				sre.setDodana(oce.getOcena());
@@ -169,30 +169,29 @@ public class StudentC {
 				sr.add(sre);
 			}
 			Iterator<Srednie> it4 = sr.iterator();
-			while(it4.hasNext()) {
+			while (it4.hasNext()) {
 				Srednie sred = it4.next();
-				if(oce.idSem == sred.idSem) {
-					sred.setDodana(sred.getDodana()+oce.getOcena());
-					sred.setDzielnik(sred.getDzielnik()+1);
-				}
-				else {
+				if (oce.idSem == sred.idSem) {
+					sred.setDodana(sred.getDodana() + oce.getOcena());
+					sred.setDzielnik(sred.getDzielnik() + 1);
+				} else {
 					sred.setIdSem(oce.getIdSem());
 					sred.setDodana(oce.getOcena());
 					sred.setDzielnik(1);
-					//sr.add(sred);
-					
-					//TODO jak starczy czasu czyli nie...
+					// sr.add(sred);
+
+					// TODO jak starczy czasu czyli nie...
 				}
 			}
-			
+
 		}
-		
+
 		Iterator<Srednie> sup = sr.iterator();
-		while(sup.hasNext()) {
+		while (sup.hasNext()) {
 			Srednie ser = sup.next();
 			ser.srednia = ser.dodana / ser.dzielnik;
 		}
-		
+
 		return sr;
 	}
 
@@ -223,13 +222,61 @@ public class StudentC {
 
 		while (iter.hasNext()) {
 			Wnioski p = iter.next();
-			if (!p.getStudent().getId_student().equals(student.getId_student())) {
-				iter.remove();
-			}
 
+			if (p.getStudent() == null) {
+				iter.remove();
+			} else {
+				if (!p.getStudent().getId_student().equals(student.getId_student())) {
+					iter.remove();
+				}
+			}
 		}
 
 		return wnioski;
 
+	}
+
+	public Collection<Student> pokazStudentow() {
+		return studentDAO.findAll();
+	}
+	
+	public Collection<Wnioski> pokazWnioskiDz() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		Dziekan dziekan = (Dziekan) session.getAttribute("dziekan");
+
+		Collection<Wnioski> wnioski = wnioskiDAO.findAll();
+		Iterator<Wnioski> iter = wnioski.iterator();
+
+		while (iter.hasNext()) {
+			Wnioski p = iter.next();
+
+			if (p.getDziekan() == null) {
+				iter.remove();
+			} else {
+				if (!p.getDziekan().getId_dziekan().equals(dziekan.getId_dziekan())) {
+					iter.remove();
+				}
+				if(p.getStatus().equals("ROZPATRZONE")) {
+					iter.remove();
+				}
+			}
+		}
+
+		return wnioski;
+
+	}
+	
+	public void updateWnioski(Collection<Wnioski> wnioski) {
+		
+		wnioski = wnioskiDAO.findAll();
+		
+		Iterator<Wnioski> it = wnioski.iterator();
+		while(it.hasNext()) {
+			Wnioski w = it.next();
+			w.setStatus("ROZPATRZONE");
+			
+			wnioskiDAO.save(w);
+		}
+		
 	}
 }

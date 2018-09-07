@@ -80,6 +80,38 @@
 		</h:form>
 		</div>
 		</ui:fragment>
+		
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('PRACOWNIK')}">
+	<p class = "title">Złóżnowy wniosek</p>
+	<div id="formularz">
+		<h:form>
+	
+			Tytuł: 
+			<br/> 
+			<h:inputText id="tytul" styleClass="input-text" name="tytul" 
+			value="#{wnioskiC.tytul}" required="true" 
+			requiredMessage="Musisz podać tytuł" validatorMessage="Tytuł powinien zawierać tylko liczby i litery, wymaganane 2-50 znaków.">
+			<f:validateRegex pattern="[0-9A-Za-z .,()_\-\\ĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,50}" />
+			</h:inputText>	
+		
+			<h:message for="tytul" errorStyle="color:red; display:block"/>
+			<br/>  
+			
+			Wiadomość: 
+			<br/> 
+			<h:inputTextarea id="wiadomosc" styleClass="area-text" name="wiadomosc" 
+			value="#{wnioskiC.wiadomosc}" required="true" 
+			requiredMessage="Treść jest wymagana" 
+			validatorMessage="Treść jest wymagana">
+			</h:inputTextarea>
+			<h:message for="wiadomosc" errorStyle="color:red; display:block"/>
+			<br/>  
+
+		<h:commandButton style="width:70px" value="Wyslij" action="#{wnioskiC.wyslijP()}"/>
+		</h:form>
+		</div>
+		</ui:fragment>
 	</div>	
 </body>
 </html>

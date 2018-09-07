@@ -32,36 +32,41 @@
 		</ul>
 		</div>
 	<div class= "strona">
-<ui:fragment
+	
+			<ui:fragment
 			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
 			<p class="title">Najpierw się zaloguj</p>
 		</ui:fragment>
-
-		<ui:fragment
+				<ui:fragment
 			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('PRACOWNIK')}">
-				<p class="title">Wybierz przedmiot do wstawienia ocen</p>
-				
-				<h:dataTable value="#{pracownikC.pokazPrzedmioty()}" var="przedmiot">
+	<div id="formularz">
+		<h:form>
+	
+			Tytuł: 
+			<br/> 
+			<h:inputText id="tytul" styleClass="input-text" name="tytul" 
+			value="#{pracownikC.tytul}" required="true" 
+			requiredMessage="Musisz podać tytuł" validatorMessage="Tytuł powinien zawierać tylko liczby i litery, wymaganane 2-50 znaków.">
+			<f:validateRegex pattern="[0-9A-Za-z .,()_\-\\ĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,50}" />
+			</h:inputText>	
+		
+			<h:message for="tytul" errorStyle="color:red; display:block"/>
+			<br/>  
+			
+			Wiadomość: 
+			<br/> 
+			<h:inputTextarea id="wiadomosc" styleClass="area-text" name="wiadomosc" 
+			value="#{pracownikC.wiadomosc}" required="true" 
+			requiredMessage="Treść jest wymagana" 
+			validatorMessage="Treść jest wymagana">
+			</h:inputTextarea>
+			<h:message for="wiadomosc" errorStyle="color:red; display:block"/>
+			<br/>  
 
-				<h:column>
-					<f:facet name="header">Nr_semestru:</f:facet>
-			#{ocenaPrzedmiotu.idSem}
-		</h:column>
-				 <!-- <h:column>
-					<f:facet name="header">Status Semestru:</f:facet>
-			#{przedmiot.semestr.stan}
-		</h:column> -->
-				<h:column>
-					<f:facet name="header">Przedmiot:</f:facet>
-			#{ocenaPrzedmiotu.przedmiotNazwa}
-		</h:column>
-				<h:column>
-					<f:facet name="header">Ocena:</f:facet>
-			#{ocenaPrzedmiotu.ocena}
-		</h:column>
-			</h:dataTable>
-				
-			</ui:fragment>
+		<h:commandButton style="width:70px" value="Wyslij" action="#{pracownikC.wyslijW()}"/>
+		</h:form>
+		</div>
+	</ui:fragment>
 	</div>
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+<ui:include src="#{componentC.getHead()}" />
+<body>
+	<div class= "banner">
+	<img src= "images/psk_logo.png" height = "150px" width = "50%"></img>
+	<ui:include src= "#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona
+						główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a href="rekrutacja.xhtml"><p class="a">Rekrutacja</p></a></li>
+			
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}"> <ui:include src = "#{componentC.getStudentMenu()}" ></ui:include></ui:fragment>
+		
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}"><a class="active"><ui:include src = "#{componentC.getAdminMenu()}" ></ui:include></a></ui:fragment>
+		
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}"> <ui:include src = "#{componentC.getDziekanMenu()}" ></ui:include></ui:fragment>
+		
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}"><ui:include src = "#{componentC.getPracownikMenu()}" ></ui:include></ui:fragment>
+			
+			<li style="float: right"><a href="logowanie.xhtml"><p
+						class="a">Logowanie</p></a></li>
+		</ul>
+		</div>
+	<div class= "strona">
+			<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Najpierw się zaloguj</p>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('ADMINISTRATOR')}">
+			<p class="title">Podaj osobe, tytuł i kwote do zaplacenia</p>
+			
+			<h:form>
+					Imie: 
+						<br />
+					<h:inputText id="imie" styleClass="input-text" name="imie"
+						value="#{wnioskiC.imie}" required="true"
+						requiredMessage="Musisz podać imie"
+						validatorMessage="imie powinien zawierać tylko litery, wymaganane 2-25 znaków.">
+						<f:validateRegex pattern="[A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,25}" />
+					</h:inputText>
+					<br />
+					<h:message for="imie" errorStyle="color:red; display:block" />
+					<br /> 
+			
+					Nazwisko: 
+					<br />
+					<h:inputText id="nazwisko" styleClass="input-text" name="nazwisko"
+						value="#{wnioskiC.nazwisko}" required="true"
+						requiredMessage="Musisz podać nazwisko"
+						validatorMessage="nazwisko powinien zawierać tylko litery, wymaganane 2-60 znaków.">
+						<f:validateRegex pattern="[A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,60}" />
+					</h:inputText>
+					<br />
+					<h:message for="nazwisko" errorStyle="color:red; display:block" />
+					<br />
+						
+					Pesel: 
+					<br />
+					<h:inputText id="pesel" styleClass="input-text" name="pesel"
+						value="#{wnioskiC.pesel}" required="true"
+						requiredMessage="Musisz podać pesel"
+						validatorMessage="pesel powinien zawierać tylko liczby, wymaganane 11 znaków.">
+						<f:validateRegex pattern="[0-9]{11,11}" />
+					</h:inputText>
+					<br />
+					<h:message for="pesel" errorStyle="color:red; display:block" />
+					Tytuł: 
+					<br />
+
+					<h:inputText id="tytul" styleClass="input-text" name="tytul"
+						value="#{wnioskiC.tytul}" required="true"
+						requiredMessage="Musisz podać pesel"
+						validatorMessage="tytul powinien zawierać tylko liczby i litery, wymaganane 2-25 znaków.">
+						<f:validateRegex pattern="[0-9A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,25}" />
+					</h:inputText>
+					<br />
+					<h:message for="tytul" errorStyle="color:red; display:block" />
+					Kwota: 
+					<br />
+					<h:inputText id="kwota" styleClass="input-text" name="kwota"
+						value="#{wnioskiC.kwota}" required="true"
+						requiredMessage="Musisz podać kwote"
+						validatorMessage="kwota powinna zawierać tylko liczby, wymaganane 2-10 znaków.">
+					</h:inputText>
+					<br />
+					<h:message for="kwota" errorStyle="color:red; display:block" />
+					<br />
+			<h:commandButton style = "height: 50px; witdh: 100px;" value = "Dodaj platnosc dla studenta" action="#{wnioskiC.addPlatnosc()}"></h:commandButton><br/></h:form>
+	</ui:fragment>
+	</div>
+</body>
+</html>

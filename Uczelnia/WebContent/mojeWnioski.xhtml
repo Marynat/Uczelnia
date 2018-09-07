@@ -93,6 +93,50 @@
 			<a href="nowyWniosek.xhtml"><button>Złóż nowy wniosek</button></a>
 
 		</ui:fragment>
+		
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('PRACOWNIK')}">
+			<p class="title">Oto twoje wnioski</p>
+
+			<h:dataTable value="#{pracownikC.pokazWnioski()}" var="wnioski">
+				<h:column>
+					<f:facet name="header">Tytuł:</f:facet>
+			#{wnioski.tytul}
+		</h:column>
+				<h:column>
+					<f:facet name="header">Treść:</f:facet>
+			#{wnioski.wiadomosc}
+		</h:column>
+				<h:column>
+					<f:facet name="header">Status:</f:facet>
+			<ui:fragment
+						rendered="#{wnioskiC.sprawdzStatus(wnioski.status)}">
+						<p style="color: #7FFF00;">#{wnioski.status}</p>
+					</ui:fragment>
+					<ui:fragment
+						rendered="#{!wnioskiC.sprawdzStatus(wnioski.status)}">
+						<p style="color: #FA8072;">#{wnioski.status}</p>
+					</ui:fragment>
+					
+		</h:column>
+		
+		<h:column>
+					<f:facet name="header">Zgoda:</f:facet>
+			<ui:fragment
+						rendered="#{wnioskiC.sprawdzZgoda(wnioski.zgoda)}">
+						<p style="color: #7FFF00;">#{wnioski.zgoda}</p>
+					</ui:fragment>
+					<ui:fragment
+						rendered="#{!wnioskiC.sprawdzZgoda(wnioski.zgoda)}">
+						<p style="color: #FA8072;">#{wnioski.zgoda}</p>
+					</ui:fragment>
+					
+		</h:column>
+			</h:dataTable>
+			<br/>
+			<a href="nowyWniosek.xhtml"><button>Złóż nowy wniosek</button></a>
+
+		</ui:fragment>
 
 	</div>
 </body>

@@ -28,9 +28,18 @@
 			<li style="float: right"><a href="logowanie.xhtml"><p
 						class="a">Logowanie</p></a></li>
 		</ul>
-		</div>ss= "strona">
+		</div> 
+	<div class= "strona">
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Najpierw się zaloguj</p>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('DZIEKAN')}">
 	<a href = "sprawdzWnioski.xhtml"><button>Sprawdz wnioski</button></a>
 	<a href = "kandydaci.html"><button>Kandydaci</button></a>
+	</ui:fragment>
 	</div>
 </body>
 </html>
