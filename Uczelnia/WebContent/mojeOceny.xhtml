@@ -54,22 +54,22 @@
 			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
 			<p class="title">Oto twoje oceny</p>
 
-			<h:dataTable value="#{studentC.pokazPrzedmioty()}" var="przedmiot">
+			 <h:dataTable value="#{studentC.pokazPrzedmioty()}" var="ocenaPrzedmiotu">
 				<h:column>
 					<f:facet name="header">Nr_semestru:</f:facet>
-			#{przedmiot.semestr.id_semestr}
+			#{ocenaPrzedmiotu.idSem}
 		</h:column>
-				<!-- <h:column>
+				 <!-- <h:column>
 					<f:facet name="header">Status Semestru:</f:facet>
 			#{przedmiot.semestr.stan}
 		</h:column> -->
 				<h:column>
 					<f:facet name="header">Przedmiot:</f:facet>
-			#{przedmiot.nazwa}
+			#{ocenaPrzedmiotu.przedmiotNazwa}
 		</h:column>
 				<h:column>
 					<f:facet name="header">Ocena:</f:facet>
-			#{przedmiot.ocena}
+			#{ocenaPrzedmiotu.ocena}
 		</h:column>
 			</h:dataTable>
 

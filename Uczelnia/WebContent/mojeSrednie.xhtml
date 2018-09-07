@@ -54,18 +54,14 @@
 			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
 			<p class="title">Oto twoje srednie semestrowe</p>
 
-			<h:dataTable value="#{studentC.sredniaS()}" var="sredniaS">
+			<h:dataTable value="#{studentC.sredniaS()}" var="srednie">
 				<h:column>
 					<f:facet name="header">Nr_semestru:</f:facet>
-			#{sredniaS.semestr.nr_sem}
-		</h:column>
-				<h:column>
-					<f:facet name="header">Status Semestru:</f:facet>
-			#{sredniaS.semestr.stan}
+			#{srednie.idSem}
 		</h:column>
 				<h:column>
 					<f:facet name="header">Średnia:</f:facet>
-			#{sredniaS.srednia}
+			#{srednie.srednia}
 		</h:column>
 			</h:dataTable>
 

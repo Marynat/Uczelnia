@@ -24,19 +24,16 @@ public class Ocena implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_ocena;
 	
-	@ManyToMany
-	@JoinTable(
-		name="ocena_student"
-		, joinColumns={
-			@JoinColumn(name="ocena_ID_OCENA")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="student_ID_STUDENT")
-			}
-		)
-	private List<Student> studenci;
+	private int ocena;
 	
-	@OneToMany(mappedBy="ocena")
-	private List<Przedmiot> przedmioty;
+	@ManyToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name = "id_przedmiot")
+	private Przedmiot przedmiot;
+	
+	@ManyToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name = "id_student")
+	private Student student;
+	
+	
 	
 }

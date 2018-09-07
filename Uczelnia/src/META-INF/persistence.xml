@@ -5,7 +5,9 @@
 	<jta-data-source>jdbc/pipeedb</jta-data-source>
 	<class>entity.Administrator</class>
 	<class>entity.Dziekan</class>
+	<class>entity.Informacje</class>
 	<class>entity.Kandydat</class>
+	<class>entity.Ocena</class>
 	<class>entity.Platnosci</class>
 	<class>entity.Pracownik_dydaktyczny</class>
 	<class>entity.Przedmiot</class>

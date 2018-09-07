@@ -48,11 +48,10 @@ public class Student implements Domain {
 			)
 	private List<Semestr> semestry;
 	
+	
 	@ManyToMany(mappedBy="studenci")
 	private List<Przedmiot> przedmioty;
 	
-	@ManyToMany(mappedBy="studenci")
-	private List<Ocena> oceny;
 	
 	@Override
 	public Object getId() {

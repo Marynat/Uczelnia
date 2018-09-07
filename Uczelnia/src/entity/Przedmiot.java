@@ -31,9 +31,6 @@ public class Przedmiot implements Serializable {
 	@JoinColumn(name = "semestr_id_semestr")
 	private Semestr semestr;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ocena_id_ocena")
-	private Ocena ocena;
 	
 	@ManyToMany
 	@JoinTable(

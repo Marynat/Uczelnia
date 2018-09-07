@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import controllers.StudentC.Srednia;
 import dao.StudentDAO;
 import dao.AdministratorDAO;
 import dao.PlatnosciDAO;
