@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -70,8 +71,16 @@ public class CandidateC {
 				 Dziekan dziekan = (Dziekan) session.getAttribute("dziekan");
 		Collection<Kandydat> kandydaci = kandydatDAO.findAll();
 		Iterator<Kandydat> it = kandydaci.iterator();
+		while(it.hasNext()) {
+			Kandydat k = it.next();
+			if(!k.getDziekan().getId_dziekan().equals(dziekan.getId_dziekan())) {
+				it.remove();
+			}
+			
+			
+		}
 		
-		
+		return kandydaci;
 		
 	}
 }
