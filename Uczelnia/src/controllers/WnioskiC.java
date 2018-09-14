@@ -155,10 +155,12 @@ public String addPlatnosc() {
 			Student s = it.next();
 			if(s.getPesel().equals(pesel)) {
 				student = s;
+				break;
 				}
 		}
-		if(student == null) {
-			return "z³y student";
+		
+		if(student.equals(null)) {
+			message = "Z³y pesel, nie ma tekiego Studenta";
 		}
 		
 		platnosci.setTytul(tytul);

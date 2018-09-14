@@ -64,12 +64,11 @@
 			#{platnosci.cena}
 		</h:column>
 				<h:column>
-					<f:facet name="header">Status:</f:facet>
+					<f:facet name="header">Status / Wybierz kwote do zapłacenia:</f:facet>
 					<ui:fragment
 						rendered="#{!platnosciC.sprawdzStatus(platnosci.status)}">
-						<a style="color: #FA8072; font-style: italic;" href="zaplac.xhtml"> <h:outputLabel
-								value="#{platnosci.status}"></h:outputLabel>
-						</a>
+						<h:form>
+						<h:commandButton value="#{platnosci.status}" action="#{platnosciC.przenies(platnosci.id_platnosci)}"></h:commandButton></h:form>
 					</ui:fragment>
 					<ui:fragment
 						rendered="#{platnosciC.sprawdzStatus(platnosci.status)}">
@@ -77,6 +76,8 @@
 					</ui:fragment>
 				</h:column>
 			</h:dataTable>
+			
+			<h:form><h:commandButton value="Zapłać" action="zaplac.xhtml"></h:commandButton></h:form>
 
 		</ui:fragment>
 

@@ -51,28 +51,76 @@
 
 		<ui:fragment
 			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
-			<p class="title">Oto twoje oceny</p>
+			<p class="title">Zaplać</p>
+			Kwota do zapłaty:
+			<h:outputText value="#{platnosciC.zwrocP()}" />
+			<br />
 
-<!-- 			<h:dataTable value="#{studentC.pokazPrzedmioty()}" var="przedmiot">
-				<h:column>
-					<f:facet name="header">Nr_semestru:</f:facet>
-			#{przedmiot.semestr.nr_sem}
-		</h:column>
-				<h:column>
-					<f:facet name="header">Status Semestru:</f:facet>
-			#{przedmiot.semestr.stan}
-		</h:column>
-				<h:column>
-					<f:facet name="header">Przedmiot:</f:facet>
-			#{przedmiot.nazwa}
-		</h:column>
-				<h:column>
-					<f:facet name="header">Ocena:</f:facet>
-			#{przedmiot.ocena}
-		</h:column>
-			</h:dataTable> -->
-			
-			//TODO zrobic wraz z platnosciami z paypalem albo czymś.
+			<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+			<div id="paypal-button-container"></div>
+
+			<input type="text" id="pls" value="#{platnosciC.zwrocP()}"
+				style="visibility: hidden;" />
+			<script>
+
+
+    paypal.Button.render({
+
+
+        env: 'sandbox', 
+
+
+        style: {
+            layout: 'vertical',  
+            size:   'medium',    
+            shape:  'rect',     
+            color:  'gold'  
+        },
+
+
+        funding: {
+            allowed: [ paypal.FUNDING.CARD, paypal.FUNDING.CREDIT ],
+            disallowed: [ ]
+        },
+
+
+        client: {
+            sandbox:    'AZe7_tOf5kTaHqsUdiV-6ld-Ub_tvFbB37frNNopXjwB4gZOJQmuE7TMrScwwYncTHfXyZZpKg66CsU2'
+        },
+
+        payment: function(data, actions) {
+            var am = document.getElementById("pls").value;
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: am, currency: 'PLN' }
+                        }
+                    ]
+                }
+            });
+        },
+
+        onAuthorize: function(data, actions) {
+            return actions.payment.execute().then(function() {
+                window.alert('Payment Complete!');
+            	#{platnosciC.updateP()};
+            });
+        }
+        onCancel: function(data){
+        	console.log("You canceled!");
+            	#{platnosciC.updatePz()};
+        }
+        onError: function(err) {
+      console.log("There was an error with PayPal!");
+    }
+         
+
+
+    }, '#paypal-button-container');
+
+</script>
+
 
 		</ui:fragment>
 

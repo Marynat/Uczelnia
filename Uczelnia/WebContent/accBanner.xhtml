@@ -13,7 +13,13 @@
 		<b>Login: </b> <h:outputLabel value="#{uzytkownik.login}"></h:outputLabel><br/>
 		<b>Rola: </b> <h:outputLabel value="#{uzytkownik.rola}"></h:outputLabel><br/><br/>
 		<h:form>
-		<h:commandButton style="width:170px; height: 50px" value="Wyloguj" action="#{autorizationC.wyloguj()}"/>
+		<h:commandButton style="width:170px; height: 50px" value="Wyloguj" action="#{autorizationC.wyloguj()}" onclick= "logout()"/>
+		<script>
+      function logout() {
+      gapi.auth2.getAuthInstance().disconnect();
+      location.reload();
+   }
+   </script>
 		</h:form>
 		</div>
 

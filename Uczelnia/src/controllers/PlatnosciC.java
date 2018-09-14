@@ -44,12 +44,46 @@ public class PlatnosciC {
 	@EJB
 	private StudentDAO studentDAO;
 	
+	Platnosci plat;
+	
+	float cena = (float) 10.0;
+	
 	public boolean sprawdzStatus(String status) {
 		
 		if(status.equals("ZAPLACONE"))
 			return true;
 		
 		return false;
+	}
+	
+	public void przenies(long id) {
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		Platnosci platnosc = null;
+		platnosc = platnosciDAO.findOne(id);
+		
+		
+		session.setAttribute("platnosc", platnosc);
+	}
+	
+	public float zwrocP() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		plat = (Platnosci) session.getAttribute("platnosc");
+		cena = plat.getCena();
+		return cena;
+	}
+	
+	public void updateP() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		plat = (Platnosci) session.getAttribute("platnosc");
+		plat.setStatus("ZAPLACONE");
+		platnosciDAO.save(plat);
+	}
+	public void updatePz() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		plat = (Platnosci) session.getAttribute("platnosc");
+		plat.setStatus("NIEZAPLACONE");
+		platnosciDAO.save(plat);
 	}
 
 }

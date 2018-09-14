@@ -79,12 +79,12 @@
 
 					<h:inputText id="tytul" styleClass="input-text" name="tytul"
 						value="#{wnioskiC.tytul}" required="true"
-						requiredMessage="Musisz podać pesel"
+						requiredMessage="Musisz podać tytul"
 						validatorMessage="tytul powinien zawierać tylko liczby i litery, wymaganane 2-25 znaków.">
-						<f:validateRegex pattern="[0-9A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,25}" />
+						<f:validateRegex pattern="[0-9A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż ]{2,25}" />
 					</h:inputText>
 					<br />
-					<h:message for="tytul" errorStyle="color:red; display:block" />
+					<h:message for="tytul" errorStyle="color:red; display:block" value="#{wnioskiC.message}"/>
 					Kwota: 
 					<br />
 					<h:inputText id="kwota" styleClass="input-text" name="kwota"

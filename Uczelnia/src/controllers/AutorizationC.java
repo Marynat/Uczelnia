@@ -61,6 +61,9 @@ public class AutorizationC {
 
 	@EJB
 	private DziekanDAO dziekanDAO;
+	
+	@EJB
+	private StudentDAO studentDAO;
 
 	public boolean czyZalogowany() {
 		return getUzytkownik() != null;
@@ -80,8 +83,11 @@ public class AutorizationC {
 
 	@Data
 	public class Autoryzacja {
-		private String login;
-		private String haslo;
+		private String login ="";
+		private String haslo ="";
+		private String imie="";
+		private String nazwisko = "";
+		private String email = "";
 	}
 
 	public String ktoZalogowany(Uzytkownik uzytkownik) {
@@ -148,6 +154,70 @@ public class AutorizationC {
 
 		return "moje_konto";
 	}
+	
+	
+	public String zalogujZGoogle() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		if (autoryzacja.getLogin().isEmpty() || autoryzacja.getHaslo().isEmpty()) {
+			errorMessage = "Wype³nij wszystkie pola";
+			return "moje_konto";
+		}
+		Uzytkownik uzytkownik = null;
+		try {
+			uzytkownik = uzytkownikDAO.findByQuery(Uzytkownik.builder().login(autoryzacja.getLogin())
+					.haslo(autoryzacja.getHaslo()).rola("").zalogowany(true).aktywowany(true).build()).iterator()
+					.next();
+		} catch (NoSuchElementException e) {
+			errorMessage = "Nie ma teakiego uzytkownika w bazie - dodaję";
+			Student student = new Student();
+			uzytkownik.setLogin(autoryzacja.login);
+			uzytkownik.setHaslo("AIzaSyDbWW5AGX1e600GY92SoNhKqzgmfwHgGI4");
+			uzytkownik.setRola("STUDENT");
+			uzytkownik.setAktywowany(true);
+			uzytkownik.setZalogowany(true);
+			student.setImie(autoryzacja.imie);
+			student.setNazwisko(autoryzacja.nazwisko);
+			student.setEmail(autoryzacja.email);
+			student.setUzytkownik(uzytkownik);
+			uzytkownikDAO.save(uzytkownik);
+			studentDAO.save(student);
+			session.setAttribute("uzytkownik", uzytkownik);
+			return "profil_studenta";
+		}
+		if (uzytkownik == null) {
+			errorMessage = "Bledny login lub haslo";
+			return "moje_konto";
+		} else {
+			if (uzytkownik.getRola().equals("STUDENT")) {
+				url = "profil_studenta.xhtml";
+				if (!uzytkownik.isAktywowany()) {
+					errorMessage = "User o login " + uzytkownik.getLogin() + " jest nieaktywny";
+					return "moje_konto";
+				}
+
+				session.setAttribute("uzytkownik", uzytkownik);
+				return "profil_studenta";
+			}
+			if (uzytkownik.getRola().equals("PRACOWNIK")) {
+				url = "profil_pracownika.xhtml";
+				session.setAttribute("uzytkownik", uzytkownik);
+				return "profil_pracownika";
+			}
+			if (uzytkownik.getRola().equals("ADMINISTRATOR")) {
+				url = "profil_administratora.xhtml";
+				session.setAttribute("uzytkownik", uzytkownik);
+				return "profil_administratora";
+			}
+			if (uzytkownik.getRola().equals("DZIEKAN")) {
+				url = "profil_dziekana.xhtml";
+				session.setAttribute("uzytkownik", uzytkownik);
+				return "profil_dziekana";
+			}
+		}
+
+		return "moje_konto";
+	}
+	
 
 	public String sprawdzCzyZalogowany() {
 		String login;
