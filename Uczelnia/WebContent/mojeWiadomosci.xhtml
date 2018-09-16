@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:include src="#{componentC.getHead()}" />
+<body>
+	<div class= "banner">
+	<img src= "images/psk_logo.png" height = "150px" width = "50%"></img>
+	<ui:include src= "#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona
+						główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a href="rekrutacja.xhtml"><p class="a">Rekrutacja</p></a></li>
+			
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}"> <ui:include src = "#{componentC.getStudentMenu()}" ></ui:include></ui:fragment>
+		
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}"> <ui:include src = "#{componentC.getAdminMenu()}" ></ui:include></ui:fragment>
+		
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}"> <a class="active"> <ui:include src = "#{componentC.getDziekanMenu()}" ></ui:include></a></ui:fragment>
+		
+		<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}"> <ui:include src = "#{componentC.getPracownikMenu()}" ></ui:include></ui:fragment>
+			
+			
+			<li style="float: right"><a href="logowanie.xhtml"><p
+						class="a">Logowanie</p></a></li>
+		</ul>
+		</div> 
+	<div class= "strona">
+	<h:form>
+	<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Najpierw się zaloguj</p>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('PRACOWNIK')}">
+				<p class="title">Wiadomości od studentów</p>
+				<h:dataTable value="#{studentC.pokazWiadomosc()}" var="wnioski">
+				<h:column>
+					<f:facet name="header">Tytuł:</f:facet>
+			#{wnioski.tytul}
+		</h:column>
+				<h:column>
+					<f:facet name="header">Treść:</f:facet>
+			#{wnioski.wiadomosc}
+		</h:column>
+
+			</h:dataTable>
+			</ui:fragment>
+			</h:form>
+	</div>
+</body>
+</html>

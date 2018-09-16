@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:include src="#{componentC.getHead()}" />
+<body>
+	<div class= "banner">
+	<img src= "images/psk_logo.png" height = "150px" width = "50%"></img>
+	<ui:include src= "#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a href="rekrutacja.xhtml"><p class="a">Rekrutacja</p></a></li>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}">
+				<a class="active"><ui:include
+						src="#{componentC.getStudentMenu()}"></ui:include> </a>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}">
+				<ui:include src="#{componentC.getAdminMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}">
+				<ui:include src="#{componentC.getDziekanMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}">
+				<ui:include src="#{componentC.getPracownikMenu()}"></ui:include>
+			</ui:fragment>
+
+
+			<li style="float: right"><a href="logowanie.xhtml"><p
+						class="a">Logowanie</p></a></li>
+		</ul>
+		</div>
+	<div class= "strona">
+	
+	<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Najpierw się zaloguj</p>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('STUDENT')}">
+	<p class = "title">Wyślij wiadomość</p>
+	<div id="formularz">
+		<h:form>
+	
+			Tytuł: 
+			<br/> 
+			<h:inputText id="tytul" styleClass="input-text" name="tytul" 
+			value="#{wnioskiC.tytul}" required="true" 
+			requiredMessage="Musisz podać tytuł" validatorMessage="Tytuł powinien zawierać tylko liczby i litery, wymaganane 2-50 znaków.">
+			<f:validateRegex pattern="[0-9A-Za-z .,()_\-\\ĄąĆćĘęŁłŃńÓóŚśŹźŻż]{2,50}" />
+			</h:inputText>	
+		
+			<h:message for="tytul" errorStyle="color:red; display:block"/>
+			<br/>  
+			
+			Wiadomość: 
+			<br/> 
+			<h:inputTextarea id="wiadomosc" styleClass="area-text" name="wiadomosc" 
+			value="#{wnioskiC.wiadomosc}" required="true" 
+			requiredMessage="Treść jest wymagana" 
+			validatorMessage="Treść jest wymagana">
+			</h:inputTextarea>
+			<h:message for="wiadomosc" errorStyle="color:red; display:block"/>
+			<br/>  
+
+		<h:commandButton style="width:70px" value="Wyslij" action="#{wnioskiC.wyslijWiad()}"/>
+		</h:form>
+		</div>
+		</ui:fragment>
+		</div>
+
+		</body>
+</html>
