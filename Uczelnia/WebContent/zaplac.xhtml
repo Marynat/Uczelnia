@@ -100,20 +100,26 @@
                 }
             });
         },
-
+        redirect_urls:{
+            return_url:'http://localhost:8080/Uczelnia/mojePlatnosci.xhtml',
+            cancel_url:'http://localhost:8080/Uczelnia/zaplac.xhtml'
+          },
+        commit: true,
         onAuthorize: function(data, actions) {
             return actions.payment.execute().then(function() {
-                window.alert('Payment Complete!');
             	#{platnosciC.updateP()};
+            	
+                window.alert('Payment Complete!');
             });
+        },
+        onCancel: function(data, actions){
+            console.log("Cancel");
+          
+        },
+        onError: function(data, actions){
+            console.log("ERRORRRRRR");
+           
         }
-        onCancel: function(data){
-        	console.log("You canceled!");
-            	#{platnosciC.updatePz()};
-        }
-        onError: function(err) {
-      console.log("There was an error with PayPal!");
-    }
          
 
 

@@ -39,33 +39,24 @@
 		<ui:fragment
 			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('DZIEKAN')}">
 				<p class="title">Wybierz kandydatów do zatwierdzenia</p>
-				<h:dataTable value="#{studentC.pokazWnioskiDz()}" var="wnioski">
+				<h:dataTable value="#{candidateC.wyswietlKandydatow()}" var="kandydaci">
 				<h:column>
-					<f:facet name="header">Tytuł:</f:facet>
-			#{wnioski.tytul}
+					<f:facet name="header">Imie:</f:facet>
+			#{kandydaci.imie}
 		</h:column>
 				<h:column>
-					<f:facet name="header">Treść:</f:facet>
-			#{wnioski.wiadomosc}
+					<f:facet name="header">Nazwisko:</f:facet>
+			#{kandydaci.nazwisko}
 		</h:column>
 				<h:column>
-					<f:facet name="header">Status:</f:facet>
-			<ui:fragment
-						rendered="#{wnioskiC.sprawdzStatus(wnioski.status)}">
-						<p style="color: #7FFF00;">#{wnioski.status}</p>
-					</ui:fragment>
-					<ui:fragment
-						rendered="#{!wnioskiC.sprawdzStatus(wnioski.status)}">
-						<p style="color: #FA8072;">#{wnioski.status}</p>
-					</ui:fragment>
-					
+					<f:facet name="header">Średnia:</f:facet>
+					#{kandydaci.srednia}
+		</h:column>
+		<h:column>
+					<f:facet name="header">Szkoła:</f:facet>
+					#{kandydaci.szkola}
 		</h:column>
 		
-		<h:column>
-					<f:facet name="header">Zgoda:</f:facet>
-		<h:inputText value = "#{wnioski.zgoda}" var = ""></h:inputText>
-					
-		</h:column>
 			</h:dataTable>
 				
 				

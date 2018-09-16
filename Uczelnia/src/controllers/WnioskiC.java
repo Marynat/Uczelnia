@@ -49,6 +49,9 @@ public class WnioskiC {
 	private DziekanDAO dziekanDAO;
 	
 	@EJB
+	private PracownikDydaktycznyDAO pracownikDydaktycznyDAO;
+	
+	@EJB
 	private WnioskiDAO wnioskiDAO;
 	
 	@EJB
@@ -174,4 +177,34 @@ public String addPlatnosc() {
 		
 		return "platnosc dodana";
 	}
+
+public void wyslijWiad() {
+	HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+
+	Student student = (Student) session.getAttribute("student");
+	Collection<Pracownik_dydaktyczny> pracownik = pracownikDydaktycznyDAO.findAll();
+	Pracownik_dydaktyczny pracownikdyda = null;
+	
+	int i=1;
+	Random rand = new Random();
+	
+	for(Iterator<Pracownik_dydaktyczny> iter = pracownik.iterator();  iter.hasNext(); pracownikdyda = iter.next()) {
+		if(i>rand.nextInt(pracownik.size())+1)
+			break;
+		i++;
+	}
+	
+	
+	Wnioski wniosek = new Wnioski();
+	
+	wniosek.setTytul(tytul);
+	wniosek.setWiadomosc(wiadomosc);
+	wniosek.setDziekan(null);
+	wniosek.setStudent(student);
+	wniosek.setPracownik(pracownikdyda);
+	
+	wnioskiDAO.save(wniosek);
+	
+}
+
 }

@@ -86,7 +86,11 @@
 				<script>
 
      function onSuccess(googleUser) {
-    	myCommand();
+    	 var profile = googleUser.getBasicProfile();
+
+    	 #{autorizationC.autoryzacja.login} = profile.getName();
+    	 #{autorizationC.autoryzacja.haslo} = "tesT123";
+    	 #{autorizationC.zaloguj()}
     
     }
     function onFailure(error) {

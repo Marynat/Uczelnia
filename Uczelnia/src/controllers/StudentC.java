@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -126,6 +127,28 @@ public class StudentC {
 		public long idSem;
 	}
 
+	public Collection<Wnioski> pokazWiadomosc() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		Pracownik_dydaktyczny pracownik = (Pracownik_dydaktyczny) session.getAttribute("pracownik_dydaktyczny");
+
+		Collection<Wnioski> wnioski = wnioskiDAO.findAll();
+		Iterator<Wnioski> iter = wnioski.iterator();
+
+		while (iter.hasNext()) {
+			Wnioski p = iter.next();
+
+			if (p.getPracownik() == null) {
+				iter.remove();
+			} else {
+				if (!p.getPracownik().getId_pracownik_dydaktyczny().equals(pracownik.getId_pracownik_dydaktyczny())) {
+					iter.remove();
+				}
+				
+			}
+		}
+
+		return wnioski;
+	}
 	public Collection<Srednie> sredniaS() {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -279,4 +302,23 @@ public class StudentC {
 		}
 		
 	}
+	
+	public void przenies(long id) {
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		Student student = null;
+		student = studentDAO.findOne(id);
+		
+		
+		session.setAttribute("student2", student);
+	}
+	
+	public float zwrocS() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		Student studen = (Student) session.getAttribute("student2");
+		return (float) 0.00;
+	}
+	
+	
+	
 }

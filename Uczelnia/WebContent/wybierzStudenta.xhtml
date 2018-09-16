@@ -54,11 +54,9 @@
 			<h:dataTable value="#{studentC.pokazStudentow()}" var="student">
 
 				<h:column>
-					<f:facet name="header">Imie studenta:</f:facet>
-					<h:commandLink action="#student.setId_student(id_student)">
-					<a style="font-style: italic;" href = "pracownikOceny.xhtml"> <f:setPropertyActionListener target="#{student.id_student}" value="#{id_student}" />
-							<h:outputLabel value="#{student.imie}"></h:outputLabel>
-						</a></h:commandLink>
+					<f:facet name="header">Imie studenta / wybierz:</f:facet>
+						<h:form>
+						<h:commandButton value="#{student.imie}" action="#{studentC.przenies(student.id_student)}"></h:commandButton></h:form>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Nazwisko:</f:facet>
@@ -69,7 +67,7 @@
 			#{student.nr_albumu}
 		</h:column>
 			</h:dataTable>
-
+	<h:form><h:commandButton value="Zatwierdz wybor" action="wybierzStudenta2.xhtml"></h:commandButton></h:form>
 		</ui:fragment>
 	</div>
 </body>

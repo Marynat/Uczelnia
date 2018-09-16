@@ -44,7 +44,7 @@ public class CandidateC {
 
 		Kandydat kandydat = new Kandydat();
 
-		Dziekan dziekan = dziekanDAO.findOne((long) 0);
+		Dziekan dziekan = dziekanDAO.findOne((long) 1);
 
 		kandydat.setImie(imie);
 		kandydat.setNazwisko(nazwisko);
