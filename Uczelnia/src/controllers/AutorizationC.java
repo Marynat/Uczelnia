@@ -109,7 +109,7 @@ public class AutorizationC {
 	public String zaloguj() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		if (autoryzacja.getLogin().isEmpty() || autoryzacja.getHaslo().isEmpty()) {
-			errorMessage = "Wype³nij wszystkie pola";
+			errorMessage = "Wypełnij wszystkie pola";
 			return "moje_konto";
 		}
 		Uzytkownik uzytkownik;
@@ -155,69 +155,64 @@ public class AutorizationC {
 		return "moje_konto";
 	}
 	
-	
-	public String zalogujZGoogle() {
-//		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-//		if (autoryzacja.getLogin().isEmpty() || autoryzacja.getHaslo().isEmpty()) {
-//			errorMessage = "Wype³nij wszystkie pola";
-//			return "moje_konto";
-//		}
-//		Uzytkownik uzytkownik = null;
-//		try {
-//			uzytkownik = uzytkownikDAO.findByQuery(Uzytkownik.builder().login(autoryzacja.getLogin())
-//					.haslo(autoryzacja.getHaslo()).rola("").zalogowany(true).aktywowany(true).build()).iterator()
-//					.next();
-//		} catch (NoSuchElementException e) {
-//			errorMessage = "Nie ma teakiego uzytkownika w bazie - dodaję";
-//			Student student = new Student();
-//			uzytkownik.setLogin(autoryzacja.login);
-//			uzytkownik.setHaslo("AIzaSyDbWW5AGX1e600GY92SoNhKqzgmfwHgGI4");
-//			uzytkownik.setRola("STUDENT");
-//			uzytkownik.setAktywowany(true);
-//			uzytkownik.setZalogowany(true);
-//			student.setImie(autoryzacja.imie);
-//			student.setNazwisko(autoryzacja.nazwisko);
-//			student.setEmail(autoryzacja.email);
-//			student.setUzytkownik(uzytkownik);
-//			uzytkownikDAO.save(uzytkownik);
-//			studentDAO.save(student);
-//			session.setAttribute("uzytkownik", uzytkownik);
-//			return "profil_studenta";
-//		}
-//		if (uzytkownik == null) {
-//			errorMessage = "Bledny login lub haslo";
-//			return "moje_konto";
-//		} else {
-//			if (uzytkownik.getRola().equals("STUDENT")) {
-//				url = "profil_studenta.xhtml";
-//				if (!uzytkownik.isAktywowany()) {
-//					errorMessage = "User o login " + uzytkownik.getLogin() + " jest nieaktywny";
-//					return "moje_konto";
-//				}
-//
-//				session.setAttribute("uzytkownik", uzytkownik);
-//				return "profil_studenta";
-//			}
-//			if (uzytkownik.getRola().equals("PRACOWNIK")) {
-//				url = "profil_pracownika.xhtml";
-//				session.setAttribute("uzytkownik", uzytkownik);
-//				return "profil_pracownika";
-//			}
-//			if (uzytkownik.getRola().equals("ADMINISTRATOR")) {
-//				url = "profil_administratora.xhtml";
-//				session.setAttribute("uzytkownik", uzytkownik);
-//				return "profil_administratora";
-//			}
-//			if (uzytkownik.getRola().equals("DZIEKAN")) {
-//				url = "profil_dziekana.xhtml";
-//				session.setAttribute("uzytkownik", uzytkownik);
-//				return "profil_dziekana";
-//			}
-//		}
-
-		return "moje_konto";
+	@Data
+	class GoogleUser {
+		
+		private String Eea;
+		private String	Paa;
+		private String	U3;
+		private String	ig;
+		private String	ofa;
+		private String	wea;
+		
 	}
 	
+	public void saveGoogleUser() {
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		
+		
+		GoogleUser googleUser = (GoogleUser) session.getAttribute("googleUser");
+		
+		autoryzacja.setEmail(googleUser.getU3());
+		
+		Uzytkownik uzytkownik = null;
+		Student student;
+		
+		try {
+			student = studentDAO.findByQuery(Student.builder().email(autoryzacja.email).build()).stream().findFirst().get();
+			uzytkownik = uzytkownikDAO.findOne(student.getUzytkownik().getId_uzytkownik());
+		} catch (NoSuchElementException e) {
+			errorMessage = "Bledny login lub haslo";
+		}
+		
+		if (uzytkownik == null) {
+			errorMessage = "Bledny login lub haslo";
+		} else {
+			if (uzytkownik.getRola().equals("STUDENT")) {
+				url = "profil_studenta.xhtml";
+				if (!uzytkownik.isAktywowany()) {
+					errorMessage = "User o login " + uzytkownik.getLogin() + " jest nieaktywny";
+				}
+
+				session.setAttribute("uzytkownik", uzytkownik);
+			}
+			if (uzytkownik.getRola().equals("PRACOWNIK")) {
+				url = "profil_pracownika.xhtml";
+				session.setAttribute("uzytkownik", uzytkownik);
+			}
+			if (uzytkownik.getRola().equals("ADMINISTRATOR")) {
+				url = "profil_administratora.xhtml";
+				session.setAttribute("uzytkownik", uzytkownik);
+			}
+			if (uzytkownik.getRola().equals("DZIEKAN")) {
+				url = "profil_dziekana.xhtml";
+				session.setAttribute("uzytkownik", uzytkownik);
+			}
+		}
+
+		
+	}
 
 	public String sprawdzCzyZalogowany() {
 		String login;

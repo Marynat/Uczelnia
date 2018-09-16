@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:include src="#{componentC.getHead()}" />
+<body>
+	<meta name="google-signin-client_id"
+		content="387145350226-04bndj20st9is1vcoseoo3fdgqd0q8j7.apps.googleusercontent.com" />
+	<script src="https://apis.google.com/js/platform.js" async="defer"></script>
+	<div class="banner">
+		<img src="images/psk_logo.png" height="150px" width="50%"></img>
+		<ui:include src="#{componentC.getAcc()}" />
+	</div>
+	<div id="przyciski">
+		<ul>
+			<li><a href="index.xhtml"><p class="a">Strona główna</p></a></li>
+			<li><a href="informacje.xhtml"><p class="a">Informacje</p></a></li>
+			<li><a href="rekrutacja.xhtml"><p class="a">Rekrutacja</p></a></li>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('STUDENT')}">
+				<ui:include src="#{componentC.getStudentMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{uzytkownik.getRola().equals('ADMINISTRATOR')}">
+				<ui:include src="#{componentC.getAdminMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('DZIEKAN')}">
+				<ui:include src="#{componentC.getDziekanMenu()}"></ui:include>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{uzytkownik.getRola().equals('PRACOWNIK')}">
+				<ui:include src="#{componentC.getPracownikMenu()}"></ui:include>
+			</ui:fragment>
+
+
+			<li style="float: right"><a class="active"><a
+					href="logowanie.xhtml"><p class="a">Logowanie</p></a></a></li>
+		</ul>
+	</div>
+	<div class="strona">
+		<p class="title">Zostałeś zalogowany z Google</p>
+
+			
+			
+			#{actorizationC.saveGoogleUser}
+			<a href= "index.xhtml">Wróć</a>
+			
+	</div>
+</body>
+</html>

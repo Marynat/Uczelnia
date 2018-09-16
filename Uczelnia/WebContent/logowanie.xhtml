@@ -79,24 +79,27 @@
 					data-onfailure="onFailure"></div>
 				<h:outputText styleClass="error" style="color:red;"
 					value=" #{autorizationC.errorMessage}"></h:outputText>
-					<p:remoteCommand name="myCommand" actionListener="#{autorizationC.zalogujZGoogle()}" style="display: none;" />
 				<br />
 				
 				
 				<script>
 
      function onSuccess(googleUser) {
-    	 var profile = googleUser.getBasicProfile();
+    	 var googleUser = googleUser.getBasicProfile();
+    	 console.log("dzialam");
+    	 console.log(googleUser);
+    	 
+    	 
+    	 sessionStorage.setItem('googleUser', googleUser);
+    	 
+		location.replace("logGoogle.xhtml");
 
-    	 #{autorizationC.autoryzacja.login} = profile.getName();
-    	 #{autorizationC.autoryzacja.haslo} = "tesT123";
-    	 #{autorizationC.zaloguj()}
-    
     }
+    
     function onFailure(error) {
-     #{autorizationC.errorMessage} = "Nieudało się zalogować z google";
       console.log(error);
     }
+    
     function renderButton() {
       gapi.signin2.render('my-signin2', {
         'scope': 'profile email',
