@@ -10,9 +10,6 @@
 
 <ui:include src="#{componentC.getHead()}" />
 <body>
-	<meta name="google-signin-client_id"
-		content="387145350226-04bndj20st9is1vcoseoo3fdgqd0q8j7.apps.googleusercontent.com" />
-	<script src="https://apis.google.com/js/platform.js" async="defer"></script>
 	<div class="banner">
 		<img src="images/psk_logo.png" height="150px" width="50%"></img>
 		<ui:include src="#{componentC.getAcc()}" />
@@ -83,8 +80,12 @@
 				
 				
 				<script>
+				
+				function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-     function onSuccess(googleUser) {
+     async function onSuccess(googleUser) {
     	 var googleUser = googleUser.getBasicProfile();
     	 console.log("dzialam");
     	 console.log(googleUser);
@@ -92,6 +93,7 @@
     	 
     	 sessionStorage.setItem('googleUser', googleUser);
     	 
+		await sleep(2000);
 		location.replace("logGoogle.xhtml");
 
     }

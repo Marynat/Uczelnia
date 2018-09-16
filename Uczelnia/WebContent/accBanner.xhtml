@@ -16,8 +16,9 @@
 		<h:commandButton style="width:170px; height: 50px" value="Wyloguj" action="#{autorizationC.wyloguj()}" onclick= "logout()"/>
 		<script>
       function logout() {
+      gapi.auth2.getAuthInstance().signOut();
       gapi.auth2.getAuthInstance().disconnect();
-      location.reload();
+      //location.reload();
    }
    </script>
 		</h:form>

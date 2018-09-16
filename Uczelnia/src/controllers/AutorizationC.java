@@ -184,6 +184,7 @@ public class AutorizationC {
 			uzytkownik = uzytkownikDAO.findOne(student.getUzytkownik().getId_uzytkownik());
 		} catch (NoSuchElementException e) {
 			errorMessage = "Bledny login lub haslo";
+			return;
 		}
 		
 		if (uzytkownik == null) {
@@ -231,14 +232,6 @@ public class AutorizationC {
 
 	public String wyloguj() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		// session.removeAttribute("uzytkownik");
-		//
-		//
-		// session.removeAttribute("student");
-		// session.removeAttribute("dziekan");
-		// session.removeAttribute("pracownik_dydaktyczny");
-		// session.removeAttribute("administrator");
-
 		session.invalidate();
 
 		url = "moje_konto.xhtml";
