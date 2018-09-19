@@ -9,7 +9,6 @@ body {
 .banner {
 	height: 150px;
 	width: 100%;
-	background: url("images/psk_logo.png");
 	background-repeat: no-repeat;
 	background-size: 50% 100%;
 }

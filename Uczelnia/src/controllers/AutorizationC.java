@@ -52,6 +52,10 @@ public class AutorizationC {
 	@Getter
 	@Setter
 	private Uzytkownik nowyUzytkownik = new Uzytkownik();
+	
+	@Getter
+	@Setter
+	private GoogleUser googleUser = new GoogleUser();
 
 	@EJB
 	private UzytkownikDAO uzytkownikDAO;
@@ -61,9 +65,13 @@ public class AutorizationC {
 
 	@EJB
 	private DziekanDAO dziekanDAO;
-	
+
 	@EJB
 	private StudentDAO studentDAO;
+	
+	@Getter
+	@Setter
+	private String U3 = "";
 
 	public boolean czyZalogowany() {
 		return getUzytkownik() != null;
@@ -83,9 +91,9 @@ public class AutorizationC {
 
 	@Data
 	public class Autoryzacja {
-		private String login ="";
-		private String haslo ="";
-		private String imie="";
+		private String login = "";
+		private String haslo = "";
+		private String imie = "";
 		private String nazwisko = "";
 		private String email = "";
 	}
@@ -154,41 +162,40 @@ public class AutorizationC {
 
 		return "moje_konto";
 	}
-	
+
 	@Data
-	class GoogleUser {
-		
+	public class GoogleUser {
+
 		private String Eea;
-		private String	Paa;
-		private String	U3;
-		private String	ig;
-		private String	ofa;
-		private String	wea;
-		
+		private String Paa = "";
+		private String U3 = "";
+		private String ig;
+		private String ofa;
+		private String wea;
+
 	}
-	
-	public void saveGoogleUser() {
-		
+
+	public void loginGoogleUser() {
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		
-		
-		GoogleUser googleUser = (GoogleUser) session.getAttribute("googleUser");
-		
-		autoryzacja.setEmail(googleUser.getU3());
-		
-		Uzytkownik uzytkownik = null;
+
+		//GoogleUser googleUser = (GoogleUser) session.getAttribute("googleUser");
+
+		//autoryzacja.setEmail(googleUser.getU3());
+
+		Uzytkownik uzytkownik;
 		Student student;
-		
+
 		try {
-			student = studentDAO.findByQuery(Student.builder().email(autoryzacja.email).build()).stream().findFirst().get();
+			student = studentDAO.findByQuery(Student.builder().email(autoryzacja.email).build()).iterator().next();
 			uzytkownik = uzytkownikDAO.findOne(student.getUzytkownik().getId_uzytkownik());
 		} catch (NoSuchElementException e) {
 			errorMessage = "Bledny login lub haslo";
 			return;
 		}
-		
+
 		if (uzytkownik == null) {
-			errorMessage = "Bledny login lub haslo";
+			errorMessage = "Bledny login lub haslo - null";
 		} else {
 			if (uzytkownik.getRola().equals("STUDENT")) {
 				url = "profil_studenta.xhtml";
@@ -211,8 +218,7 @@ public class AutorizationC {
 				session.setAttribute("uzytkownik", uzytkownik);
 			}
 		}
-
-		
+		errorMessage = "Pomyslnie zalogowano";
 	}
 
 	public String sprawdzCzyZalogowany() {
@@ -287,12 +293,12 @@ public class AutorizationC {
 			session.invalidate();
 		}
 	}
-	
+
 	public String zmienRekrutacje() {
 		Uczelnia uczelnia = uczelniaDAO.findOne((long) 1);
-			uczelnia.setRekrutacja(!uczelnia.isRekrutacja());
-			uczelniaDAO.save(uczelnia);
-			return "Rekrutacja została zmieniona";
+		uczelnia.setRekrutacja(!uczelnia.isRekrutacja());
+		uczelniaDAO.save(uczelnia);
+		return "Rekrutacja została zmieniona";
 	}
 
 }

@@ -37,7 +37,7 @@ public class Kandydat implements Domain {
 	private String szkola;
 	
 	@ManyToOne(cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "dziekan_id_dziekan")
+	@JoinColumn(name = "dziekan_id_dziekan", nullable=true)
 	private Dziekan dziekan;
 
 	@Override

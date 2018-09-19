@@ -78,6 +78,7 @@ public class PlatnosciC {
 		plat = (Platnosci) session.getAttribute("platnosc");
 		plat.setStatus("ZAPLACONE");
 		platnosciDAO.save(plat);
+		session.removeAttribute("platnosc");
 	}
 	public void updatePz() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);

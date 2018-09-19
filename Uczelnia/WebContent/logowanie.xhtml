@@ -5,8 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui">
+	xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:include src="#{componentC.getHead()}" />
 <body>
@@ -43,8 +42,19 @@
 		</ul>
 	</div>
 	<div class="strona">
+	
+	<ui:fragment
+			rendered="#{!autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+			<p class="title">Jesteś już zalogowany, najpierw się wyloguj</p>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
+	
 		<p class="title">Zaloguj się</p>
+		<h:inputHidden id="googleUsr" value="#{autorizationC.autoryzacja.email}" />
 		<div id="formularz">
+		
 			<h:form>
 	
 			Login: 
@@ -76,10 +86,13 @@
 					data-onfailure="onFailure"></div>
 				<h:outputText styleClass="error" style="color:red;"
 					value=" #{autorizationC.errorMessage}"></h:outputText>
-				<br />
-				
-				
+						
 				<script>
+				function przerwij() {
+      gapi.auth2.getAuthInstance().signOut();
+      console.log("congrats");
+      gapi.auth2.getAuthInstance().disconnect();
+   }
 				
 				function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -87,13 +100,11 @@
 
      async function onSuccess(googleUser) {
     	 var googleUser = googleUser.getBasicProfile();
-    	 console.log("dzialam");
-    	 console.log(googleUser);
+
+    	 var hymm = document.getElementById("googleUsr").value = googleUser.getEmail().toString();
     	 
     	 
-    	 sessionStorage.setItem('googleUser', googleUser);
-    	 
-		await sleep(2000);
+		await sleep(4000);
 		location.replace("logGoogle.xhtml");
 
     }
@@ -116,6 +127,13 @@
   </script>
 			</h:form>
 		</div>
+		<h:form>
+				<br />
+				<br />
+				<h:outputText value= "Jeżeli byłeś już zalogowany z google logowanie automatyczne nastąpi po 4 sekundach, w razie chęci anulowania kliknij tutaj:" /><br />
+				<h:commandButton value="Przerwij logowanie automatyczne" onclick="przerwij()"/>
+		</h:form>
+		</ui:fragment>
 	</div>
 </body>
 </html>

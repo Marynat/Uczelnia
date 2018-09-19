@@ -30,7 +30,6 @@
 		</ul>
 		</div> 
 	<div class= "strona">
-	<h:form>
 	<ui:fragment
 			rendered="#{autorizationC.sprawdzKtoZalogowany().equals('NIEZALOGOWANY')}">
 			<p class="title">Najpierw się zaloguj</p>
@@ -56,14 +55,15 @@
 					<f:facet name="header">Szkoła:</f:facet>
 					#{kandydaci.szkola}
 		</h:column>
+				<h:column>
+					<f:facet name="header">Zaznacz:</f:facet>
+					<h:form>
+				<h:commandButton style="width:70px" value="Zaznacz" action="#{candidateC.zatwierdzKandydata(kandydaci.id_kandydat)}"/>
+				</h:form>
+		</h:column>
 		
 			</h:dataTable>
-				
-				
-				
 				</ui:fragment>
-				<h:commandButton style="width:70px" value="Zatwierdz" action="#{studentC.updateWnioski(wnioski)}"/>
-				</h:form>
 	</div>
 </body>
 </html>

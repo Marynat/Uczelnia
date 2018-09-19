@@ -46,12 +46,16 @@
 		</ul>
 	</div>
 	<div class="strona">
-		<p class="title">Zostałeś zalogowany z Google</p>
+		<p class="title">Logowanie z Google</p>
 
 			
 			
-			#{actorizationC.saveGoogleUser}
-			<a href= "index.xhtml">Wróć</a>
+			#{autorizationC.loginGoogleUser()}
+			
+			<h:outputText value="#{autorizationC.errorMessage} " />
+			
+			<a href="index.xhtml"><p class="a">Wróć na stronę główna</p></a>
+			
 			
 	</div>
 </body>
