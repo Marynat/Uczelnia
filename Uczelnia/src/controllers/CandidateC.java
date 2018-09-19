@@ -135,7 +135,7 @@ public class CandidateC {
 		student.setUzytkownik(uzytkownik);
 		student.setSemestry(semestry);
 		student.setPrzedmioty(przedmioty);
-		student.setEmail("");
+		student.setEmail("tymczasowy@email.com");
 		student.setAdres("");
 		studentDAO.save(student);
 		kandydat.setDziekan(null);
